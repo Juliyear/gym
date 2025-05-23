@@ -19,7 +19,7 @@ async function postDataToSheety(payload) {
             },
             // Sheety espera os dados aninhados sob o nome da aba no singular
             // O nome da aba é 'exercicios', então o singular é 'exercicio'
-            body: JSON.stringify({ exercicio: payload })
+            body: JSON.stringify({ Exercicios: payload })
         });
 
         const result = await response.json();
