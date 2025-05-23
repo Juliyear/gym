@@ -1,6 +1,6 @@
 // --- CONFIGURAÇÕES DO SITE ---
 // URLs fornecidas pelo Sheety
-const SHEETY_API_URL_EXERCICIOS = 'https://api.sheety.co/d528f68442f942c04387dec50427dfac/gym/exercicios';
+const SHEETY_API_URL_EXERCICIOS = 'https://api.sheety.co/d528f68442f942c04387dec50427dfac/gym2/exercicios'; // ATUALIZE AQUI!
 
 // Elementos do DOM
 const addExerciseForm = document.getElementById('add-exercise-form');
