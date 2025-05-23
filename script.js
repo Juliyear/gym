@@ -1,11 +1,3 @@
-// --- CONFIGURAÇÕES DO SITE ---
-// URLs fornecidas pelo Sheety
-const SHEETY_API_URL_EXERCICIOS = 'https://api.sheety.co/d528f68442f942c04387dec50427dfac/gym2/exercicios'; // ATUALIZE AQUI!
-
-// Elementos do DOM
-const addExerciseForm = document.getElementById('add-exercise-form');
-const responseMessage = document.getElementById('response-message');
-
 // --- FUNÇÃO PARA ENVIAR DADOS PARA O SHEETY (Adicionar Exercício) ---
 async function postDataToSheety(payload) {
     try {
@@ -17,20 +9,19 @@ async function postDataToSheety(payload) {
             headers: {
                 'Content-Type': 'application/json'
             },
-            // Sheety espera os dados aninhados sob o nome da aba no singular
-            // O nome da aba é 'exercicios', então o singular é 'exercicio'
-            body: JSON.stringify({ Exercicios: payload })
+            // ESTA LINHA É A CRÍTICA. ELA DEVE SER EXATAMENTE ASSIM:
+            // Sua aba é "Exercicios", então o Sheety espera a chave "exercicio" (singular e minúscula inicial)
+            body: JSON.stringify({ exercicio: payload })
         });
 
         const result = await response.json();
 
         if (!response.ok) {
-            // Se a resposta HTTP não for OK, Sheety retorna um objeto de erro
-            const errorMsg = result.error ? result.error.message : 'Erro desconhecido ao enviar dados para Sheety.';
+            const errorMsg = result.errors && result.errors[0] ? result.errors[0].detail : 'Erro desconhecido ao enviar dados para Sheety.';
             throw new Error(`HTTP error! status: ${response.status} - ${errorMsg}`);
         }
 
-        return result; // Sheety retorna o objeto salvo aninhado (ex: { exercicio: { ... } })
+        return result;
     } catch (error) {
         console.error('Erro ao enviar dados para Sheety:', error);
         responseMessage.textContent = 'Erro: ' + error.message;
@@ -41,26 +32,23 @@ async function postDataToSheety(payload) {
 
 // --- LÓGICA DE SUBMISSÃO DO FORMULÁRIO ---
 addExerciseForm.addEventListener('submit', async (event) => {
-    event.preventDefault(); // Impede o recarregamento da página
+    event.preventDefault();
 
-    // Coleta os valores dos campos do formulário
     const exerciseName = document.getElementById('exercise-name').value;
     const groupMuscular = document.getElementById('group-muscular').value;
-    const focus = document.getElementById('focus').value; // 'Foco' do site
+    const focus = document.getElementById('focus').value;
     const imageLink = document.getElementById('image-link').value;
 
-    // Prepara o "payload" (os dados a serem enviados)
-    // Os nomes das chaves devem corresponder EXATAMENTE aos cabeçalhos da sua planilha Google
     const payload = {
         "Nome": exerciseName,
         "GrupoMuscular": groupMuscular,
-        "SubGrupoMuscular": focus, // Mapeado para 'SubGrupoMuscular' na planilha
+        "SubGrupoMuscular": focus,
         "LinkImagem": imageLink
     };
 
-    // Envia os dados para o Sheety
     const result = await postDataToSheety(payload);
 
+    // ... (o resto do código) ...
     if (result && result.exercicio) { // Verifica se o Sheety retornou o objeto de exercício
         responseMessage.textContent = 'Exercício adicionado com sucesso! ID: ' + result.exercicio.id;
         responseMessage.className = 'success';
