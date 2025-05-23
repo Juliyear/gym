@@ -51,16 +51,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Os nomes das chaves (Nome, GrupoMuscular, etc.) devem corresponder EXATAMENTE
         // aos cabeçalhos da sua planilha Google
-        curl -X POST "https://api.sheety.co/d528f68442f942c04387dec50427dfac/gym2/exercicios" \
--H "Content-Type: application/json" \
--d '{
-  "exercicio": {
-    "Nome": "Teste",
-    "GrupoMuscular": "Costas",
-    "SubGrupoMuscular": "Dorsal",
-    "LinkImagem": "https://exemplo.com/img.gif"
-  }
-}'
+        const payload = {
+            "Nome": exerciseName,
+            "GrupoMuscular": groupMuscular,
+            "SubGrupoMuscular": focus,
+            "LinkImagem": imageLink
+        };
 
         const result = await postDataToSheety(payload);
 
