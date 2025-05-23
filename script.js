@@ -66,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
             responseMessage.className = 'success';
             addExerciseForm.reset();
         } else {
+            const result = await response.json();
             console.log("Falha ao adicionar exercício, verificar mensagem de erro no DOM.");
         }
     });
