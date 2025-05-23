@@ -1,22 +1,27 @@
 // --- CONFIGURAÇÕES DO SITE ---
+// URLs fornecidas pelo Sheety para sua planilha "gym2" e aba "Exercicios"
 const SHEETY_API_URL_EXERCICIOS = 'https://api.sheety.co/d528f68442f942c04387dec50427dfac/gym2/exercicios';
 
+// O código só será executado quando o DOM (HTML) estiver completamente carregado
 document.addEventListener('DOMContentLoaded', () => {
+    // Elementos do DOM
     const addExerciseForm = document.getElementById('add-exercise-form');
     const responseMessage = document.getElementById('response-message');
 
+    // --- FUNÇÃO PARA ENVIAR DADOS PARA O SHEETY (Adicionar Exercício) ---
     async function postDataToSheety(payload) {
         try {
             responseMessage.textContent = 'Enviando dados...';
             responseMessage.className = '';
 
             const response = await fetch(SHEETY_API_URL_EXERCICIOS, {
-                method: 'POST',
+                method: 'POST', // Método HTTP para adicionar dados
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json' // Indica que o corpo da requisição é JSON
                 },
-                // ESTA LINHA É A CRÍTICA para o Sheety:
-                body: JSON.stringify({ exercicio: payload }) // Deve ser 'exercicio'
+                // ESSA LINHA É A CRÍTICA. O Sheety espera 'exercicio' (singular, minúscula inicial)
+                // porque a aba é "Exercicios" (plural).
+                body: JSON.stringify({ exercicio: payload })
             });
 
             const result = await response.json();
@@ -35,6 +40,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
+    // --- LÓGICA DE SUBMISSÃO DO FORMULÁRIO ---
     addExerciseForm.addEventListener('submit', async (event) => {
         event.preventDefault();
 
@@ -43,6 +49,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const focus = document.getElementById('focus').value;
         const imageLink = document.getElementById('image-link').value;
 
+        // Os nomes das chaves (Nome, GrupoMuscular, etc.) devem corresponder EXATAMENTE
+        // aos cabeçalhos da sua planilha Google
         const payload = {
             "Nome": exerciseName,
             "GrupoMuscular": groupMuscular,
@@ -57,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
             responseMessage.className = 'success';
             addExerciseForm.reset();
         } else {
-            console.log("Falha ao adicionar exercício, verificar mensagem no DOM.");
+            console.log("Falha ao adicionar exercício, verificar mensagem de erro no DOM.");
         }
     });
 });
