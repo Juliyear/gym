@@ -52,11 +52,12 @@ document.addEventListener('DOMContentLoaded', () => {
         // Os nomes das chaves (Nome, GrupoMuscular, etc.) devem corresponder EXATAMENTE
         // aos cabeçalhos da sua planilha Google
         const payload = {
-  nome: exerciseName,
-  grupoMuscular: groupMuscular,
-  subGrupoMuscular: focus,
-  linkImagem: imageLink
+  nome: "Teste API",
+  grupoMuscular: "Costas",
+  subGrupoMuscular: "Dorsal",
+  linkImagem: "https://exemplo.com/imagem.gif"
 };
+
 
         const result = await postDataToSheety(payload);
 
