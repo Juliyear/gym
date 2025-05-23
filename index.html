@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Novo Exercício</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Adicionar Novo Exercício</h1>
+    </header>
+
+    <main>
+        <section id="add-exercise-form-section">
+            <form id="add-exercise-form">
+                <label for="exercise-name">Nome do exercício:</label>
+                <input type="text" id="exercise-name" required>
+
+                <label for="group-muscular">Grupo muscular:</label>
+                <input type="text" id="group-muscular" placeholder="Ex: Peito, Costas, Perna" required>
+
+                <label for="focus">Foco (Sub-grupo muscular):</label>
+                <input type="text" id="focus" placeholder="Ex: Porção medial, Lateral do ombro">
+
+                <label for="image-link">Link da imagem (GIF/JPG/PNG):</label>
+                <input type="url" id="image-link" placeholder="Ex: https://exemplo.com/exercicio.gif">
+
+                <button type="submit">Adicionar Exercício</button>
+            </form>
+            <p id="response-message"></p>
+        </section>
+    </main>
+
+    <footer>
+        <p>© 2023 Diário de Treino</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
