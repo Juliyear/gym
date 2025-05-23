@@ -52,10 +52,10 @@ addExerciseForm.addEventListener('submit', async (event) => {
     // Prepara o "payload" (os dados a serem enviados)
     // Os nomes das chaves devem corresponder EXATAMENTE aos cabeçalhos da sua planilha Google
     const payload = {
-        Nome: exerciseName,
-        GrupoMuscular: groupMuscular,
-        SubGrupoMuscular: focus, // Mapeado para 'SubGrupoMuscular' na planilha
-        LinkImagem: imageLink
+        "Nome": exerciseName,
+        "GrupoMuscular": groupMuscular,
+        "SubGrupoMuscular": focus, // Mapeado para 'SubGrupoMuscular' na planilha
+        "LinkImagem": imageLink
     };
 
     // Envia os dados para o Sheety
